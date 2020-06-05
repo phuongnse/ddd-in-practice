@@ -83,5 +83,10 @@ namespace DDDInPractice.Logic
             yield return FiveDollarCount;
             yield return TwentyDollarCount;
         }
+
+        public override string ToString()
+        {
+            return Amount < 1 ? $"¢{Amount * 100:0}" : $"${Amount:0.00}";
+        }
     }
 }

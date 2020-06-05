@@ -46,7 +46,7 @@ namespace DDDInPractice.Test
         [InlineData(1, 2, 3, 4, 5, 6, 149.96)]
         [InlineData(11, 0, 0, 0, 0, 0, 0.11)]
         [InlineData(110, 0, 0, 0, 100, 0, 501.1)]
-        public void CalculateAmount_ShouldProducesCorrectResult_WhenGivenValidValues(
+        public void CalculateAmount_ShouldProducesCorrectResult(
             int oneCentCount,
             int tenCentCount,
             int quarterCentCount,
@@ -64,6 +64,31 @@ namespace DDDInPractice.Test
                 twentyDollarCount);
 
             money.Amount.Should().Be(expectedValue);
+        }
+
+        [Theory]
+        [InlineData(1, 0, 0, 0, 0, 0, "¢1")]
+        [InlineData(0, 0, 0, 1, 0, 0, "$1.00")]
+        [InlineData(1, 0, 0, 1, 0, 0, "$1.01")]
+        [InlineData(0, 0, 2, 1, 0, 0, "$1.50")]
+        public void ToString_ShouldProducesAmountOfMoney(
+            int oneCentCount,
+            int tenCentCount,
+            int quarterCentCount,
+            int oneDollarCount,
+            int fiveDollarCount,
+            int twentyDollarCount,
+            string expectedString)
+        {
+            var money = new Money(
+                oneCentCount,
+                tenCentCount,
+                quarterCentCount,
+                oneDollarCount,
+                fiveDollarCount,
+                twentyDollarCount);
+
+            money.ToString().Should().Be(expectedString);
         }
 
         [Fact]
@@ -87,7 +112,7 @@ namespace DDDInPractice.Test
         }
 
         [Fact]
-        public void SubtractionOfTwoMoney_ShouldProducesCorrectResult_WhenGivenValidValues()
+        public void SubtractionOfTwoMoney_ShouldProducesCorrectResult()
         {
             var money1 = new Money(10, 10, 10, 10, 10, 10);
             var money2 = new Money(1, 2, 3, 4, 5, 6);
@@ -117,7 +142,7 @@ namespace DDDInPractice.Test
         }
 
         [Fact]
-        public void SumOfTwoMoney_ShouldProducesCorrectResult_WhenGivenValidValues()
+        public void SumOfTwoMoney_ShouldProducesCorrectResult()
         {
             var money1 = new Money(1, 2, 3, 4, 5, 6);
             var money2 = new Money(1, 2, 3, 4, 5, 6);
