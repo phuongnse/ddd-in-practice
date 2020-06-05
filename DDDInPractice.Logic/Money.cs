@@ -13,6 +13,10 @@ namespace DDDInPractice.Logic
         public static readonly Money FiveDollar = new Money(0, 0, 0, 0, 1, 0);
         public static readonly Money TwentyDollar = new Money(0, 0, 0, 0, 0, 1);
 
+        private Money()
+        {
+        }
+
         public Money(
             int oneCentCount,
             int tenCentCount,
