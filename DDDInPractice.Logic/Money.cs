@@ -1,19 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DDDInPractice.Logic
 {
     public sealed class Money : ValueObject<Money>
     {
-        public Money
-        (
+        public static readonly Money None = new Money(0, 0, 0, 0, 0, 0);
+        public static readonly Money OneCent = new Money(1, 0, 0, 0, 0, 0);
+        public static readonly Money TenCent = new Money(0, 1, 0, 0, 0, 0);
+        public static readonly Money QuarterCent = new Money(0, 0, 1, 0, 0, 0);
+        public static readonly Money OneDollar = new Money(0, 0, 0, 1, 0, 0);
+        public static readonly Money FiveDollar = new Money(0, 0, 0, 0, 1, 0);
+        public static readonly Money TwentyDollar = new Money(0, 0, 0, 0, 0, 1);
+
+        public Money(
             int oneCentCount,
             int tenCentCount,
             int quarterCentCount,
             int oneDollarCount,
             int fiveDollarCount,
-            int twentyDollarCount
-        )
+            int twentyDollarCount)
         {
+            if (oneCentCount < 0 ||
+                tenCentCount < 0 ||
+                quarterCentCount < 0 ||
+                oneDollarCount < 0 ||
+                fiveDollarCount < 0 ||
+                twentyDollarCount < 0)
+                throw new InvalidOperationException();
+
             OneCentCount = oneCentCount;
             TenCentCount = tenCentCount;
             QuarterCentCount = quarterCentCount;
@@ -29,17 +44,34 @@ namespace DDDInPractice.Logic
         public int FiveDollarCount { get; }
         public int TwentyDollarCount { get; }
 
+        public decimal Amount =>
+            OneCentCount * 0.01m +
+            TenCentCount * 0.1m +
+            QuarterCentCount * 0.25m +
+            OneDollarCount +
+            FiveDollarCount * 5 +
+            TwentyDollarCount * 20;
+
         public static Money operator +(Money left, Money right)
         {
-            return new Money
-            (
+            return new Money(
                 left.OneCentCount + right.OneCentCount,
                 left.TenCentCount + right.TenCentCount,
                 left.QuarterCentCount + right.QuarterCentCount,
                 left.OneDollarCount + right.OneDollarCount,
                 left.FiveDollarCount + right.FiveDollarCount,
-                left.TwentyDollarCount + right.TwentyDollarCount
-            );
+                left.TwentyDollarCount + right.TwentyDollarCount);
+        }
+
+        public static Money operator -(Money left, Money right)
+        {
+            return new Money(
+                left.OneCentCount - right.OneCentCount,
+                left.TenCentCount - right.TenCentCount,
+                left.QuarterCentCount - right.QuarterCentCount,
+                left.OneDollarCount - right.OneDollarCount,
+                left.FiveDollarCount - right.FiveDollarCount,
+                left.TwentyDollarCount - right.TwentyDollarCount);
         }
 
         protected override IEnumerable<object> GetAtomicValues()
