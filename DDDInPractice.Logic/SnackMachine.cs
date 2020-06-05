@@ -6,14 +6,6 @@ namespace DDDInPractice.Logic
 {
     public class SnackMachine : Entity
     {
-        protected SnackMachine()
-        {
-        }
-
-        public SnackMachine(Guid id) : base(id)
-        {
-        }
-
         public virtual Money MoneyInside { get; protected set; } = None;
         public virtual Money MoneyInTransaction { get; protected set; } = None;
 

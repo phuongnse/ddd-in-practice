@@ -4,23 +4,32 @@ using Volo.Abp.Domain.Entities;
 
 namespace DDDInPractice.Logic
 {
-    public abstract class Entity : Entity<Guid>
+    public abstract class Entity : IEntity<long>
     {
-        protected Entity()
+        public virtual object[] GetKeys()
         {
+            return new object[] {Id};
         }
 
-        protected Entity(Guid id) : base(id)
-        {
-        }
+        public virtual long Id { get; protected set; }
 
         public override bool Equals(object obj)
         {
-            return
-                EntityEquals(obj) &&
-                obj is Entity other &&
-                GetRealType() == other.GetRealType() &&
-                Id == other.Id;
+            var other = obj as Entity;
+
+            if (ReferenceEquals(this, other))
+                return true;
+
+            if (other is null)
+                return false;
+
+            if (GetRealType() != other.GetRealType())
+                return false;
+
+            if (Id == 0 || other.Id == 0)
+                return false;
+
+            return Id == other.Id;
         }
 
         public override int GetHashCode()

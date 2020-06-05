@@ -11,8 +11,7 @@ namespace DDDInPractice.Test
         [Fact]
         public void BuildSnack_ShouldTransferMoneyInTransactionToMoneyInside()
         {
-            var id = Guid.NewGuid();
-            var snackMachine = new SnackMachine(id);
+            var snackMachine = new SnackMachine();
             snackMachine.InsertMoney(OneDollar);
             snackMachine.InsertMoney(OneDollar);
 
@@ -25,8 +24,7 @@ namespace DDDInPractice.Test
         [Fact]
         public void InsertMoney_ShouldThrowAnException_WhenReceivesMoreThanOneCoinOrNoteAtATime()
         {
-            var id = Guid.NewGuid();
-            var snackMachine = new SnackMachine(id);
+            var snackMachine = new SnackMachine();
             var twoCent = OneCent + OneCent;
 
             Action action = () => snackMachine.InsertMoney(twoCent);
@@ -37,8 +35,7 @@ namespace DDDInPractice.Test
         [Fact]
         public void ReturnMoney_ShouldEmptiesMoneyInTransaction()
         {
-            var id = Guid.NewGuid();
-            var snackMachine = new SnackMachine(id);
+            var snackMachine = new SnackMachine();
             snackMachine.InsertMoney(OneDollar);
 
             snackMachine.ReturnMoney();
