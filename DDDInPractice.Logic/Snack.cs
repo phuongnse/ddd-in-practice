@@ -1,6 +1,6 @@
 ﻿namespace DDDInPractice.Logic
 {
-    public class Snack : Entity
+    public class Snack : AggregateRoot
     {
         protected Snack()
         {

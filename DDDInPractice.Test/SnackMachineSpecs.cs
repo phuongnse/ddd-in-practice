@@ -13,14 +13,14 @@ namespace DDDInPractice.Test
         public void BuildSnack_ShouldTradesInsertedMoneyForASnack()
         {
             var snackMachine = new SnackMachine();
-            snackMachine.LoadSnack(1, new Snack("Some snack"), 10, 1);
+            snackMachine.LoadSnack(1, new SnackPile(new Snack("Some snack"), 10, 1));
             snackMachine.InsertMoney(OneDollar);
 
             snackMachine.BuySnack(1);
 
             snackMachine.MoneyInside.Amount.Should().Be(1);
             snackMachine.MoneyInTransaction.Should().Be(None);
-            snackMachine.Slots.Single(slot => slot.Position == 1).Quantity.Should().Be(9);
+            snackMachine.GetSnackPile(1).Quantity.Should().Be(9);
         }
 
         [Fact]
@@ -43,6 +43,28 @@ namespace DDDInPractice.Test
             snackMachine.ReturnMoney();
 
             snackMachine.MoneyInTransaction.Should().Be(None);
+        }
+
+        [Fact]
+        public void BuySnack_ShouldThrowAnException_WhenThereIsNoSnacks()
+        {
+            var snackMachine = new SnackMachine();
+
+            Action action = () => snackMachine.BuySnack(1);
+
+            action.Should().Throw<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void BuySnack_ShouldThrowAnException_WhenMoneyInsertedNotEnough()
+        {
+            var snackMachine = new SnackMachine();
+            snackMachine.LoadSnack(1, new SnackPile(new Snack("Some snack"), 10, 2));
+            snackMachine.InsertMoney(OneDollar);
+
+            Action action = () => snackMachine.BuySnack(1);
+
+            action.Should().Throw<InvalidOperationException>();
         }
     }
 }
