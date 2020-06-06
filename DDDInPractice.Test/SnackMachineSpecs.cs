@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using DDDInPractice.Logic;
 using FluentAssertions;
 using Xunit;
@@ -9,16 +10,17 @@ namespace DDDInPractice.Test
     public class SnackMachineSpecs
     {
         [Fact]
-        public void BuildSnack_ShouldTransferMoneyInTransactionToMoneyInside()
+        public void BuildSnack_ShouldTradesInsertedMoneyForASnack()
         {
             var snackMachine = new SnackMachine();
-            snackMachine.InsertMoney(OneDollar);
+            snackMachine.LoadSnack(1, new Snack("Some snack"), 10, 1);
             snackMachine.InsertMoney(OneDollar);
 
-            snackMachine.BuySnack();
+            snackMachine.BuySnack(1);
 
-            snackMachine.MoneyInside.Amount.Should().Be(2);
+            snackMachine.MoneyInside.Amount.Should().Be(1);
             snackMachine.MoneyInTransaction.Should().Be(None);
+            snackMachine.Slots.Single(slot => slot.Position == 1).Quantity.Should().Be(9);
         }
 
         [Fact]
@@ -40,7 +42,7 @@ namespace DDDInPractice.Test
 
             snackMachine.ReturnMoney();
 
-            snackMachine.MoneyInTransaction.Amount.Should().Be(0);
+            snackMachine.MoneyInTransaction.Should().Be(None);
         }
     }
 }

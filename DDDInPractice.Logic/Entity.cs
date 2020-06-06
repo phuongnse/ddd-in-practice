@@ -15,12 +15,7 @@ namespace DDDInPractice.Logic
 
         public override bool Equals(object obj)
         {
-            var other = obj as Entity;
-
-            if (ReferenceEquals(this, other))
-                return true;
-
-            if (other is null)
+            if (!(obj is Entity other))
                 return false;
 
             if (GetRealType() != other.GetRealType())
