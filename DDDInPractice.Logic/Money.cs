@@ -92,5 +92,33 @@ namespace DDDInPractice.Logic
         {
             return Amount < 1 ? $"¢{Amount * 100:0}" : $"${Amount:0.00}";
         }
+
+        public Money Allocate(decimal amount)
+        {
+            var twentyDollarCount = Math.Min((int) (amount / 20), TwentyDollarCount);
+            amount -= twentyDollarCount * 20;
+
+            var fiveDollarCount = Math.Min((int) (amount / 5), FiveDollarCount);
+            amount -= fiveDollarCount * 5;
+
+            var oneDollarCount = Math.Min((int) amount, OneDollarCount);
+            amount -= oneDollarCount;
+
+            var quarterCentCount = Math.Min((int) (amount / 0.25m), QuarterCentCount);
+            amount -= quarterCentCount * 0.25m;
+
+            var tenCentCount = Math.Min((int) (amount / 0.1m), TenCentCount);
+            amount -= tenCentCount * 0.1m;
+
+            var oneCentCount = Math.Min((int) (amount / 0.01m), OneCentCount);
+
+            return new Money(
+                oneCentCount,
+                tenCentCount,
+                quarterCentCount,
+                oneDollarCount,
+                fiveDollarCount,
+                twentyDollarCount);
+        }
     }
 }

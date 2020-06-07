@@ -18,7 +18,7 @@ namespace DDDInPractice.Test
             snackMachine.BuySnack(1);
 
             snackMachine.MoneyInside.Amount.Should().Be(1);
-            snackMachine.MoneyInTransaction.Should().Be(None);
+            snackMachine.MoneyInTransaction.Should().Be(0);
             snackMachine.GetSnackPile(1).Quantity.Should().Be(9);
         }
 
@@ -63,7 +63,23 @@ namespace DDDInPractice.Test
 
             snackMachine.ReturnMoney();
 
-            snackMachine.MoneyInTransaction.Should().Be(None);
+            snackMachine.MoneyInTransaction.Should().Be(0);
+        }
+
+        [Fact]
+        public void ReturnMoney_ShouldTryToReturnHighestDenominationFirst()
+        {
+            var snackMachine = new SnackMachine();
+            snackMachine.LoadMoney(OneDollar);
+
+            snackMachine.InsertMoney(QuarterCent);
+            snackMachine.InsertMoney(QuarterCent);
+            snackMachine.InsertMoney(QuarterCent);
+            snackMachine.InsertMoney(QuarterCent);
+            snackMachine.ReturnMoney();
+
+            snackMachine.MoneyInside.QuarterCentCount.Should().Be(4);
+            snackMachine.MoneyInside.OneDollarCount.Should().Be(0);
         }
     }
 }

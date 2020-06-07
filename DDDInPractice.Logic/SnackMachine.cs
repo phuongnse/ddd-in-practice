@@ -10,7 +10,7 @@ namespace DDDInPractice.Logic
         public SnackMachine()
         {
             MoneyInside = None;
-            MoneyInTransaction = None;
+            MoneyInTransaction = 0;
 
             Slots = new List<Slot>
             {
@@ -21,7 +21,7 @@ namespace DDDInPractice.Logic
         }
 
         public virtual Money MoneyInside { get; protected set; }
-        public virtual Money MoneyInTransaction { get; protected set; }
+        public virtual decimal MoneyInTransaction { get; protected set; }
         protected virtual IList<Slot> Slots { get; set; }
 
         public virtual void InsertMoney(Money money)
@@ -31,25 +31,26 @@ namespace DDDInPractice.Logic
             if (!coinsAndNotes.Contains(money))
                 throw new InvalidOperationException();
 
-            MoneyInTransaction += money;
+            MoneyInside += money;
+            MoneyInTransaction += money.Amount;
         }
 
         public virtual void ReturnMoney()
         {
-            MoneyInTransaction = None;
+            MoneyInside -= MoneyInside.Allocate(MoneyInTransaction);
+            MoneyInTransaction = 0;
         }
 
         public virtual void BuySnack(int position)
         {
             var slot = GetSlot(position);
 
-            if (slot.SnackPile.Price > MoneyInTransaction.Amount)
+            if (slot.SnackPile.Price > MoneyInTransaction)
                 throw new InvalidOperationException();
 
             slot.SnackPile = slot.SnackPile.SubtractOne();
 
-            MoneyInside += MoneyInTransaction;
-            MoneyInTransaction = None;
+            MoneyInTransaction = 0;
         }
 
         public virtual void LoadSnack(int position, SnackPile snackPile)
@@ -60,6 +61,11 @@ namespace DDDInPractice.Logic
         public virtual SnackPile GetSnackPile(int position)
         {
             return GetSlot(position).SnackPile;
+        }
+
+        public virtual void LoadMoney(Money money)
+        {
+            MoneyInside += money;
         }
 
         private Slot GetSlot(int position)
