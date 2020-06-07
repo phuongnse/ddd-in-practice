@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using DDDInPractice.Logic;
 using FluentAssertions;
 using Xunit;
@@ -24,6 +23,28 @@ namespace DDDInPractice.Test
         }
 
         [Fact]
+        public void BuySnack_ShouldThrowAnException_WhenMoneyInsertedNotEnough()
+        {
+            var snackMachine = new SnackMachine();
+            snackMachine.LoadSnack(1, new SnackPile(new Snack("Some snack"), 10, 2));
+            snackMachine.InsertMoney(OneDollar);
+
+            Action action = () => snackMachine.BuySnack(1);
+
+            action.Should().Throw<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void BuySnack_ShouldThrowAnException_WhenThereIsNoSnacks()
+        {
+            var snackMachine = new SnackMachine();
+
+            Action action = () => snackMachine.BuySnack(1);
+
+            action.Should().Throw<InvalidOperationException>();
+        }
+
+        [Fact]
         public void InsertMoney_ShouldThrowAnException_WhenReceivesMoreThanOneCoinOrNoteAtATime()
         {
             var snackMachine = new SnackMachine();
@@ -43,28 +64,6 @@ namespace DDDInPractice.Test
             snackMachine.ReturnMoney();
 
             snackMachine.MoneyInTransaction.Should().Be(None);
-        }
-
-        [Fact]
-        public void BuySnack_ShouldThrowAnException_WhenThereIsNoSnacks()
-        {
-            var snackMachine = new SnackMachine();
-
-            Action action = () => snackMachine.BuySnack(1);
-
-            action.Should().Throw<InvalidOperationException>();
-        }
-
-        [Fact]
-        public void BuySnack_ShouldThrowAnException_WhenMoneyInsertedNotEnough()
-        {
-            var snackMachine = new SnackMachine();
-            snackMachine.LoadSnack(1, new SnackPile(new Snack("Some snack"), 10, 2));
-            snackMachine.InsertMoney(OneDollar);
-
-            Action action = () => snackMachine.BuySnack(1);
-
-            action.Should().Throw<InvalidOperationException>();
         }
     }
 }

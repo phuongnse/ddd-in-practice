@@ -1,16 +1,10 @@
 ﻿using System;
 using NHibernate.Proxy;
-using Volo.Abp.Domain.Entities;
 
 namespace DDDInPractice.Logic
 {
-    public abstract class Entity : IEntity<long>
+    public abstract class Entity
     {
-        public virtual object[] GetKeys()
-        {
-            return new object[] {Id};
-        }
-
         public virtual long Id { get; protected set; }
 
         public override bool Equals(object obj)
