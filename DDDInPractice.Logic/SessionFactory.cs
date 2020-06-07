@@ -28,11 +28,13 @@ namespace DDDInPractice.Logic
                 .Database(MsSqlConfiguration.MsSql2012.ConnectionString(connectionString))
                 .Mappings(mappingConfiguration => mappingConfiguration.FluentMappings
                     .AddFromAssembly(Assembly.GetExecutingAssembly())
-                    .Conventions.Add(ConventionBuilder.Property.When(
-                        acceptanceCriteria => acceptanceCriteria.Expect(
-                            propertyInspector => propertyInspector.Nullable,
-                            Is.Not.Set),
-                        propertyInstance => propertyInstance.Not.Nullable()))
+                    .Conventions.Add(
+                        ForeignKey.EndsWith("Id"),
+                        ConventionBuilder.Property.When(
+                            acceptanceCriteria => acceptanceCriteria.Expect(
+                                propertyInspector => propertyInspector.Nullable,
+                                Is.Not.Set),
+                            propertyInstance => propertyInstance.Not.Nullable()))
                     .Conventions.Add<TableNameConvention>()
                     .Conventions.Add<HiLoConvention>())
                 .BuildSessionFactory();

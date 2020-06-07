@@ -1,5 +1,6 @@
 ﻿using DDDInPractice.Logic;
 using Xunit;
+using static DDDInPractice.Logic.Money;
 
 namespace DDDInPractice.Test
 {
@@ -10,9 +11,13 @@ namespace DDDInPractice.Test
         {
             SessionFactory.Init("Server=.;Database=DDDInPractice;Trusted_Connection=true");
 
-            using var session = SessionFactory.OpenSession();
-            const long id = 1;
-            var snackMachine = session.Get<SnackMachine>(id);
+            var snackMachineRepository = new SnackMachineRepository();
+            var snackMachine = snackMachineRepository.GetById(1);
+            snackMachine.InsertMoney(OneDollar);
+            snackMachine.InsertMoney(OneDollar);
+            snackMachine.InsertMoney(OneDollar);
+            snackMachine.BuySnack(1);
+            snackMachineRepository.Save(snackMachine);
         }
     }
 }
