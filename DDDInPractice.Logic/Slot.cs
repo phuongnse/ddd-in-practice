@@ -1,4 +1,6 @@
-﻿namespace DDDInPractice.Logic
+﻿using static DDDInPractice.Logic.SnackPile;
+
+namespace DDDInPractice.Logic
 {
     public class Slot : Entity
     {
@@ -10,7 +12,7 @@
         {
             SnackMachine = snackMachine;
             Position = position;
-            SnackPile = new SnackPile(null, 0, 0);
+            SnackPile = Empty;
         }
 
         public virtual SnackMachine SnackMachine { get; protected set; }

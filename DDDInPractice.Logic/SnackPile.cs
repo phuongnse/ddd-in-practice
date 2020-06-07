@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using static DDDInPractice.Logic.Snack;
 
 namespace DDDInPractice.Logic
 {
     public sealed class SnackPile : ValueObject<SnackPile>
     {
+        public static readonly SnackPile Empty = new SnackPile(None, 0, 0);
+
         private SnackPile()
         {
         }
