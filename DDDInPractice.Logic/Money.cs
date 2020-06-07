@@ -78,6 +78,17 @@ namespace DDDInPractice.Logic
                 left.TwentyDollarCount - right.TwentyDollarCount);
         }
 
+        public static Money operator *(Money left, int multiplier)
+        {
+            return new Money(
+                left.OneCentCount * multiplier,
+                left.TenCentCount * multiplier,
+                left.QuarterCentCount * multiplier,
+                left.OneDollarCount * multiplier,
+                left.FiveDollarCount * multiplier,
+                left.TwentyDollarCount * multiplier);
+        }
+
         protected override IEnumerable<object> GetAtomicValues()
         {
             yield return OneCentCount;

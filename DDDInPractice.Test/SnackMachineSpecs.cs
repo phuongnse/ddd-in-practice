@@ -23,10 +23,36 @@ namespace DDDInPractice.Test
         }
 
         [Fact]
+        public void BuySnack_ShouldReturnChangeAfterPurchase()
+        {
+            var snackMachine = new SnackMachine();
+            snackMachine.LoadSnack(1, new SnackPile(new Snack("Some snack"), 1, 0.5m));
+            snackMachine.LoadMoney(TenCent * 10);
+            snackMachine.InsertMoney(OneDollar);
+
+            snackMachine.BuySnack(1);
+
+            snackMachine.MoneyInside.Amount.Should().Be(1.5m);
+            snackMachine.MoneyInTransaction.Should().Be(0);
+        }
+
+        [Fact]
         public void BuySnack_ShouldThrowAnException_WhenMoneyInsertedNotEnough()
         {
             var snackMachine = new SnackMachine();
             snackMachine.LoadSnack(1, new SnackPile(new Snack("Some snack"), 10, 2));
+            snackMachine.InsertMoney(OneDollar);
+
+            Action action = () => snackMachine.BuySnack(1);
+
+            action.Should().Throw<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void BuySnack_ShouldThrowAnException_WhenNotEnoughChange()
+        {
+            var snackMachine = new SnackMachine();
+            snackMachine.LoadSnack(1, new SnackPile(new Snack("Some snack"), 1, 0.5m));
             snackMachine.InsertMoney(OneDollar);
 
             Action action = () => snackMachine.BuySnack(1);

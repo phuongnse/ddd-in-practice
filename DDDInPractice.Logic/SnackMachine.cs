@@ -48,8 +48,15 @@ namespace DDDInPractice.Logic
             if (slot.SnackPile.Price > MoneyInTransaction)
                 throw new InvalidOperationException();
 
+            var change = MoneyInTransaction - slot.SnackPile.Price;
+            var allocate = MoneyInside.Allocate(change);
+
+            if (allocate.Amount < change)
+                throw new InvalidOperationException();
+
             slot.SnackPile = slot.SnackPile.SubtractOne();
 
+            MoneyInside -= allocate;
             MoneyInTransaction = 0;
         }
 
