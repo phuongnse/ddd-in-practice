@@ -1,4 +1,6 @@
-﻿namespace DDDInPractice.Logic
+﻿using DDDInPractice.Logic.Utilities;
+
+namespace DDDInPractice.Logic.Common
 {
     public abstract class Repository<TAggregateRoot> where TAggregateRoot : AggregateRoot
     {

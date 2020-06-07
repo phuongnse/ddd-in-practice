@@ -1,6 +1,8 @@
 ﻿using DDDInPractice.Logic;
+using DDDInPractice.Logic.SnackMachines;
+using DDDInPractice.Logic.Utilities;
 using Xunit;
-using static DDDInPractice.Logic.Money;
+using static DDDInPractice.Logic.SharedKernel.Money;
 
 namespace DDDInPractice.Test
 {

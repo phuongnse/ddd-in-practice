@@ -5,7 +5,7 @@ using FluentNHibernate.Conventions.AcceptanceCriteria;
 using FluentNHibernate.Conventions.Helpers;
 using NHibernate;
 
-namespace DDDInPractice.Logic
+namespace DDDInPractice.Logic.Utilities
 {
     public static class SessionFactory
     {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using DDDInPractice.Logic.Common;
 
-namespace DDDInPractice.Logic
+namespace DDDInPractice.Logic.SharedKernel
 {
     public sealed class Money : ValueObject<Money>
     {

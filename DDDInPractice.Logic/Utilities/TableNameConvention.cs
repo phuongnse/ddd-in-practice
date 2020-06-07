@@ -1,7 +1,7 @@
 ﻿using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Instances;
 
-namespace DDDInPractice.Logic
+namespace DDDInPractice.Logic.Utilities
 {
     public class TableNameConvention : IClassConvention
     {

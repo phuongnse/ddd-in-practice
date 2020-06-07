@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using static DDDInPractice.Logic.Snack;
+using DDDInPractice.Logic.Common;
+using static DDDInPractice.Logic.SnackMachines.Snack;
 
-namespace DDDInPractice.Logic
+namespace DDDInPractice.Logic.SnackMachines
 {
     public sealed class SnackPile : ValueObject<SnackPile>
     {

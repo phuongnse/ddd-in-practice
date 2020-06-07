@@ -1,7 +1,8 @@
-﻿using FluentNHibernate.Conventions;
+﻿using DDDInPractice.Logic.Common;
+using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Instances;
 
-namespace DDDInPractice.Logic
+namespace DDDInPractice.Logic.Utilities
 {
     public class HiLoConvention : IIdConvention
     {

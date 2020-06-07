@@ -1,6 +1,7 @@
-﻿using static DDDInPractice.Logic.SnackPile;
+﻿using DDDInPractice.Logic.Common;
+using static DDDInPractice.Logic.SnackMachines.SnackPile;
 
-namespace DDDInPractice.Logic
+namespace DDDInPractice.Logic.SnackMachines
 {
     public class Slot : Entity
     {

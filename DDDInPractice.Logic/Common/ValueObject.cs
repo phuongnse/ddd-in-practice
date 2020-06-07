@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DDDInPractice.Logic
+namespace DDDInPractice.Logic.Common
 {
     public abstract class ValueObject<TValueObject> where TValueObject : ValueObject<TValueObject>
     {
