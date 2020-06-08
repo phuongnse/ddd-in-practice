@@ -25,7 +25,11 @@ namespace DDDInPractice.Logic.Atms
         public virtual void TakeMoney(decimal amount)
         {
             MoneyInside -= MoneyInside.Allocate(amount);
-            MoneyCharged += CalculateAmountWithCommission(amount);
+
+            var amountWithCommission = CalculateAmountWithCommission(amount);
+            MoneyCharged += amountWithCommission;
+
+            AddDomainEvent(new BalanceChangedEvent(amountWithCommission));
         }
 
         private static decimal CalculateAmountWithCommission(decimal amount)
